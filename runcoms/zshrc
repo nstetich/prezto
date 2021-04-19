@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # load zgen
 # source "${HOME}/.zgen/zgen.zsh"
 # 
@@ -19,10 +26,10 @@ fi
 
 # Customize to your needs...
 
-source "$HOME/.brewsn.zshrc"
+# source "$HOME/.brewsn.zshrc"
 
-export GROOVY_HOME=/usr/local/opt/groovy/libexec
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+# export GROOVY_HOME=/usr/local/opt/groovy/libexec
+# export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
 
 export PATH=$PATH:$HOME/bin
 
@@ -36,12 +43,13 @@ function agx { local term=$1; shift; ag -l --xml "$term" | xargs ag -H --filenam
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && source "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && source "/usr/local/opt/nvm/nvm.sh" --no-use # This loads nvm
+# source ~/.lazy-load-nvm.sh
 
 # python virtualenv
-VIRTUALENVWRAPPER_PYTHON=$(which python3)
-export WORKON_HOME=~/.virtualenvs
-[ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
+# VIRTUALENVWRAPPER_PYTHON=$(which python3)
+# export WORKON_HOME=~/.virtualenvs
+# [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
 
 # [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
@@ -66,3 +74,18 @@ export WORKON_HOME=~/.virtualenvs
 #   npm $@
 # }
 
+# Too slow to call `brew`, use direct link instead
+# source /usr/local/Homebrew/Library/Taps/now/homebrew-devtools/etc/zshrc
+source /usr/local/Homebrew/Library/Taps/now/homebrew-devtools/etc/commonrc
+
+if [[ "$TERM_PROGRAM" = "vscode" ]]
+then
+  [[ ! -f ~/.p10k.lean.zsh ]] || source ~/.p10k.lean.zsh
+else
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# eval "$(starship init zsh)"
